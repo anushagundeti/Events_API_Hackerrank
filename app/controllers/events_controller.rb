@@ -1,44 +1,54 @@
 class EventsController < ApplicationController
-    def index
-        @events = Event.all.sort
-    
-        render json: @events
-      end
-    
-      # GET /events/1
-      def show
-        render json: @event
-      end
-    
-      # POST /events
-      def create
-        @event = event.new(event_params)
-    
-        if @event.save
-          render json: @event, status: :created, location: @event
-        else
-          render json: @event.errors, status: :unprocessable_entity
-        end
-      end
-    
-      # PATCH/PUT /events/1
-      def update
-        if @event.update(event_params)
-          render json: @event
-        else
-          render json: @event.errors, status: :unprocessable_entity
-        end
-      end
-    
-      # DELETE /events/1
-      def destroy
-        @event.destroy!
-      end
-    
-      private
 
-        # Only allow a list of trusted parameters through.
-        def event_params
-          params.require(:event).permit(:event_type, :actor_id, :public, :repo_id)
-        end
+  before_action :set_repo, only: [:create, :index_by_repo, :show_by_repo]
+
+  def create
+    event = @repo.events.new(event_params)
+
+    if event.save
+      render json: { status: 'success', event: event }, status: :created
+    else
+      render json: { status: 'error', errors: event.errors.full_messages }, status: :unprocessable_entity
+    end
+  end
+
+  def index
+    events = Event.all
+    render json: events
+  end
+
+  def index_by_repo
+    events = @repo.events
+    render json: events
+  end
+
+  def show
+    event = Event.find(params[:id])
+
+    if event
+      render json: event
+    else
+      render json: { status: 'error', message: 'Event not found' }, status: :not_found
+    end
+  end
+
+  def show_by_repo
+    event = @repo.events.find_by(id: params[:id])
+    
+    if event
+      render json: event
+    else
+      render json: { status: 'error', message: 'Event not found' }, status: :not_found
+    end
+  end
+
+  private
+
+  def set_repo
+    @repo = Repo.find(params[:repo_id])
+  end
+
+  def event_params
+    params.require(:event).permit(:event_type, :public, :repo_id, :actor_id)
+  end
 end
