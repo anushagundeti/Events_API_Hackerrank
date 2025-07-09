@@ -29,7 +29,7 @@ Each event includes the following fields:
   "actor_id": 1
 }
 ---
-
+```
 ## 🧾 Event Fields
 
 | Field       | Type     | Description                                                  |
