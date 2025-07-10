@@ -62,8 +62,8 @@ Each event includes the following fields:
 - 🔹 `GET /repos/:repo_id/events` – Return all events for a repo  
   **Response:**  
   - `200 OK` – Array of events for the `repo_id`, ordered by id
-
-## 🚀 Getting Started
+ 
+  - ## 🚀 Getting Started
 
 ### 1. Clone the repo
 
@@ -72,24 +72,10 @@ git clone https://github.com/anushagundeti/github-events-api.git
 cd github-events-api
 
 
-2. Install dependencies
-bash
-Copy
-Edit
-bin/bundle install
-3. Run the server
-bash
-Copy
-Edit
-bin/bundle exec rails server --binding 0.0.0.0 --port 8000
-Open in browser or Postman at: http://localhost:8000
-
 🧪 Running Tests
 Run the test suite using:
 
-bash
-Copy
-Edit
 RAILS_ENV=test bin/rails db:migrate
 RAILS_ENV=test bin/bundle exec rspec
+
 
