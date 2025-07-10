@@ -40,52 +40,38 @@ Each event includes the following fields:
 | `repo_id`   | Integer  | ID of the repository this event belongs to                   |
 | `actor_id`  | Integer  | ID of the user who triggered the event                       |
 
-🎯 API Endpoints
-🔹 POST /events
-Create a new event
+### 🎯 API Endpoints
 
-Validations:
+- 🔹 `POST /events` – Create a new event  
+  **Validations:**
+  - Only accepts valid `event_type` values
+  - ID is auto-assigned (starts at 1)  
+  **Responses:**
+  - `201 Created` – Returns full event JSON if valid  
+  - `400 Bad Request` – If `event_type` is invalid
 
-Only accepts valid event_type values
+- 🔹 `GET /events` – Return all events  
+  **Response:**  
+  - `200 OK` – Returns an array of events ordered by id
 
-ID is auto-assigned (starts at 1)
+- 🔹 `GET /events/:id` – Return a specific event  
+  **Responses:**  
+  - `200 OK` – If found  
+  - `404 Not Found` – If not found
 
-Responses:
+- 🔹 `GET /repos/:repo_id/events` – Return all events for a repo  
+  **Response:**  
+  - `200 OK` – Array of events for the `repo_id`, ordered by id
 
-201 Created – Returns full event JSON if valid
+## 🚀 Getting Started
 
-400 Bad Request – If event_type is invalid
+### 1. Clone the repo
 
-🔹 GET /events
-Return all events
-
-Response:
-
-200 OK – Returns an array of events ordered by id
-
-🔹 GET /events/:id
-Return a specific event
-
-Responses:
-
-200 OK – If found
-
-404 Not Found – If not found
-
-🔹 GET /repos/:repo_id/events
-Return all events belonging to a given repo
-
-Response:
-
-200 OK – Array of events for the repo_id, ordered by id
-
-🚀 Getting Started
-1. Clone the repo
-bash
-Copy
-Edit
+```bash
 git clone https://github.com/anushagundeti/github-events-api.git
 cd github-events-api
+
+
 2. Install dependencies
 bash
 Copy
